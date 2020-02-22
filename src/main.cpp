@@ -1,7 +1,13 @@
 #include <iostream>
 
-int main() {
-    std::cout << "Initial state" << std::endl;
+#include "game.hpp"
 
-    return 0;
+int main() {
+    Game game;
+
+    if(!game.init("knight", 640, 480, true)) {
+        return 1;
+    }
+
+    return game.exec();
 }
