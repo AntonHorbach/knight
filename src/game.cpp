@@ -1,7 +1,10 @@
 #include "game.hpp"
 
+#include "AssetsManager.hpp"
+
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
+AssetsManager Game::assetsManager;
 
 bool Game::init(const char* title, size_t width, size_t height,
                 bool fullscreen)
@@ -50,12 +53,24 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     running = true;
 
+    assetsManager.loadTexture("./assets/knight_anims.png", "knight");
+
     return true;
 }
 
 void Game::draw() {
     SDL_RenderClear(renderer);
+
+    SDL_Rect src = {0, 0, 32, 32};
+    static SDL_Rect dst = {0, 0, 64, 64};
+    int w, h;
+    SDL_GetWindowSize(window, &w, &h);
+
+    assetsManager.drawTexture("knight", src, dst);
     
+    dst.x = (dst.x + 3) % w;
+    dst.y = (dst.y + 3) % h;
+
     SDL_RenderPresent(renderer);
 }
 
