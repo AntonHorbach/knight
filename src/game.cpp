@@ -55,6 +55,11 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
+    auto entity = entityManager.createEntity();
+
+    entity->addComponent<Component>();
+    entity->getComponent<Component>();
+
     return true;
 }
 

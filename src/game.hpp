@@ -5,10 +5,13 @@
 
 #include <SDL2/SDL.h>
 
+#include "ECS/ECS.hpp"
+
 class AssetsManager;
 
 class Game {
     SDL_Window* window;
+    Manager entityManager;
     bool running;
 
     void draw();
@@ -22,7 +25,8 @@ public:
     static SDL_Event event;
     static AssetsManager assetsManager;
 
-    bool init(const char* title, size_t width, size_t height, bool fullscreen);
+    bool init(const char* title, size_t width, size_t height,
+                bool fullscreen);
     int exec();
 
     ~Game();
