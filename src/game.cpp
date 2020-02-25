@@ -60,6 +60,15 @@ bool Game::init(const char* title, size_t width, size_t height,
     entity->addComponent<Component>();
     entity->getComponent<Component>();
 
+    vec2f vec1 = {0, 2};
+    vec2f vec2 = {2, 0};
+
+    vec1 = vec1 + vec2;
+    vec2 = vec2 - vec1;
+
+    std::cout << vec1.x << vec1.y << std::endl;
+    std::cout << vec2.x << vec2.y << std::endl;
+
     return true;
 }
 

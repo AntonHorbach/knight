@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 
 #include "ECS/ECS.hpp"
+#include "math/vec2.hpp"
 
 class AssetsManager;
 
