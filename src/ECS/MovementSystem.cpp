@@ -7,11 +7,29 @@ MovementSystem::MovementSystem(Manager* manager)
 
 void MovementSystem::update() {
     for(const shEntity& entity : manager->getEntities()) {
-        if(entity->hasComponent<TransformComponent>()) {
+        if(entity->hasComponent<TransformComponent>()
+            && entity->hasComponent<KeybordInput>())
+        {
             TransformComponent& comp = entity->getComponent<TransformComponent>();
 
-            comp.position.x += comp.velocity.x;
-            comp.position.y += comp.velocity.y;
+            if(Game::event.type == SDL_KEYDOWN) {
+                switch(Game::event.key.keysym.sym) {
+                case SDLK_a:
+                    comp.position.x -= comp.velocity.x;
+                    break;
+                case SDLK_d:
+                    comp.position.x += comp.velocity.x;
+                    break;
+                case SDLK_w:
+                    comp.position.y -= comp.velocity.y;
+                    break;
+                case SDLK_s:
+                    comp.position.y += comp.velocity.y;
+                    break;
+                default:
+                    break;
+                }
+            }
         }
     }
 }

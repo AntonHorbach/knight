@@ -102,6 +102,7 @@ public:
     System(Manager* m): manager(m) {}
 
     virtual void update() = 0;
+    virtual void draw() = 0;
 
     virtual ~System() {}
 };

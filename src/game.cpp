@@ -58,9 +58,12 @@ bool Game::init(const char* title, size_t width, size_t height,
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
     player = entityManager.createEntity();
-    player->addComponent<TransformComponent>(vec2f{0, 0}, vec2f{1, 1});
+    player->addComponent<TransformComponent>(vec2f{0, 0}, vec2f{10, 10});
+    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 32, 32}, SDL_Rect{0, 0, 64, 64}, "knight");
+    player->addComponent<KeybordInput>();
 
     systems.push_back(std::unique_ptr<System>{new MovementSystem(&entityManager)});
+    systems.push_back(std::unique_ptr<System>{new DrawSystem(&entityManager)});
 
     return true;
 }
@@ -68,32 +71,26 @@ bool Game::init(const char* title, size_t width, size_t height,
 void Game::draw() {
     SDL_RenderClear(renderer);
 
-    SDL_Rect src = {0, 0, 32, 32};
-    static SDL_Rect dst = {0, 0, 64, 64};
-    int w, h;
-    SDL_GetWindowSize(window, &w, &h);
-
-    assetsManager.drawTexture("knight", src, dst);
-    
-    dst.x = (dst.x + 3) % w;
-    dst.y = (dst.y + 3) % h;
+    for(auto& sys : systems) {
+        sys->draw();
+    }
 
     SDL_RenderPresent(renderer);
 }
 
 void Game::handleEvents() {
-    while(SDL_PollEvent(&event)) {
-        switch(event.type) {
-            case SDL_QUIT:
+    SDL_PollEvent(&event);
+
+    switch(event.type) {
+        case SDL_QUIT:
+            running = false;
+            break;
+        case SDL_KEYDOWN:
+            if(SDLK_ESCAPE == event.key.keysym.sym)
                 running = false;
-                break;
-            case SDL_KEYDOWN:
-                if(SDLK_ESCAPE == event.key.keysym.sym)
-                    running = false;
-                break;
-            default:
-                break;
-        }
+            break;
+        default:
+            break;
     }
 }
 
@@ -101,10 +98,6 @@ void Game::update() {
     for(auto& sys : systems) {
         sys->update();
     }
-
-    TransformComponent& tc = player->getComponent<TransformComponent>();
-    
-    std::cout << tc.position.x << ' ' << tc.position.y << std::endl;
 }
 
 int Game::exec() {
