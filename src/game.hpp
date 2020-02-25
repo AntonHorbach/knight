@@ -4,15 +4,18 @@
 #include <iostream>
 
 #include <SDL2/SDL.h>
+#include <memory>
 
-#include "ECS/ECS.hpp"
-#include "math/vec2.hpp"
+#include "ECS/Components.hpp"
+#include "ECS/Systems.hpp"
 
 class AssetsManager;
 
 class Game {
     SDL_Window* window;
     Manager entityManager;
+    std::vector<std::unique_ptr<System>> systems; 
+
     bool running;
 
     void draw();

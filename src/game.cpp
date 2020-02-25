@@ -6,6 +6,8 @@ SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 AssetsManager Game::assetsManager;
 
+static shEntity player = {};
+
 bool Game::init(const char* title, size_t width, size_t height,
                 bool fullscreen)
 {
@@ -55,19 +57,10 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
-    auto entity = entityManager.createEntity();
+    player = entityManager.createEntity();
+    player->addComponent<TransformComponent>(vec2f{0, 0}, vec2f{1, 1});
 
-    entity->addComponent<Component>();
-    entity->getComponent<Component>();
-
-    vec2f vec1 = {0, 2};
-    vec2f vec2 = {2, 0};
-
-    vec1 = vec1 + vec2;
-    vec2 = vec2 - vec1;
-
-    std::cout << vec1.x << vec1.y << std::endl;
-    std::cout << vec2.x << vec2.y << std::endl;
+    systems.push_back(std::unique_ptr<System>{new MovementSystem(&entityManager)});
 
     return true;
 }
@@ -105,7 +98,13 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
+    for(auto& sys : systems) {
+        sys->update();
+    }
 
+    TransformComponent& tc = player->getComponent<TransformComponent>();
+    
+    std::cout << tc.position.x << ' ' << tc.position.y << std::endl;
 }
 
 int Game::exec() {

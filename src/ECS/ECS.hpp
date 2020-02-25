@@ -88,6 +88,22 @@ public:
 
         return entity;
     }
+
+    const std::vector<shEntity>& getEntities() const {
+        return entities;
+    }
+};
+
+class System {
+protected:
+    Manager* manager;
+
+public:
+    System(Manager* m): manager(m) {}
+
+    virtual void update() = 0;
+
+    virtual ~System() {}
 };
 
 #endif
