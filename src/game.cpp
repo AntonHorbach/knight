@@ -58,9 +58,9 @@ bool Game::init(const char* title, size_t width, size_t height,
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
     player = entityManager.createEntity();
-    player->addComponent<TransformComponent>(vec2f{150, 150}, vec2f{10, 10});
+    player->addComponent<TransformComponent>(vec2f{300, 300}, vec2f{10, 10});
     player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 32, 32}, SDL_Rect{0, 0, 64, 64}, "knight");
-    player->addComponent<JumperComponent>(100.f);
+    player->addComponent<JumperComponent>(200.f);
     player->addComponent<KeybordInput>();
 
     systems.push_back(std::unique_ptr<System>{new MovementSystem(&entityManager)});

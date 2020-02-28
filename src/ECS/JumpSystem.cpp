@@ -22,7 +22,7 @@ void JumpSystem::update() {
                     }
                     break;
                 }
-                case SDLK_d: {
+                case SDLK_s: {
                     if(jc.jumping) {
                         jc.jumping = false;
                         jc.comingDown = true;

@@ -10,15 +10,15 @@ void MovementSystem::update() {
         if(entity->hasComponent<TransformComponent>()
             && entity->hasComponent<KeybordInput>())
         {
-            TransformComponent& comp = entity->getComponent<TransformComponent>();
+            TransformComponent& tc = entity->getComponent<TransformComponent>();
 
             if(Game::event.type == SDL_KEYDOWN) {
                 switch(Game::event.key.keysym.sym) {
                 case SDLK_a:
-                    comp.position.x -= comp.velocity.x;
+                    tc.position.x -= tc.velocity.x;
                     break;
                 case SDLK_d:
-                    comp.position.x += comp.velocity.x;
+                    tc.position.x += tc.velocity.x;
                     break;
                 default:
                     break;
