@@ -20,12 +20,6 @@ void MovementSystem::update() {
                 case SDLK_d:
                     comp.position.x += comp.velocity.x;
                     break;
-                case SDLK_w:
-                    comp.position.y -= comp.velocity.y;
-                    break;
-                case SDLK_s:
-                    comp.position.y += comp.velocity.y;
-                    break;
                 default:
                     break;
                 }

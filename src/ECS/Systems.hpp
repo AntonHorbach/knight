@@ -18,4 +18,11 @@ public:
     void draw() override;
 };
 
+class JumpSystem: public System {
+public:
+    JumpSystem(Manager* manager);
+    void update() override;
+    void draw() override {}
+};
+
 #endif

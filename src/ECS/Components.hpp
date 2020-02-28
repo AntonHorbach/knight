@@ -24,4 +24,13 @@ struct SpriteComponent: public Component {
 
 struct KeybordInput: public Component {};
 
+struct JumperComponent: public Component {
+    float height;
+    float baseY;
+    bool jumping = false;
+    bool comingDown = false;
+
+    JumperComponent(float h);
+};
+
 #endif
