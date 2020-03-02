@@ -73,10 +73,25 @@ public:
     }
 };
 
+class System {
+protected:
+    Manager* manager;
+
+public:
+    System(Manager* m): manager(m) {}
+
+    virtual void update() = 0;
+    virtual void draw() = 0;
+
+    virtual ~System() {}
+};
+
 using shEntity = std::shared_ptr<Entity>;
+using unqSystem = std::unique_ptr<System>;
 
 class Manager {
     std::vector<shEntity> entities;
+    std::vector<unqSystem> systems; 
 
 public:
     Manager() = default;
@@ -89,22 +104,26 @@ public:
         return entity;
     }
 
+    template <typename T>
+    void addSystem() {
+        systems.push_back(std::make_unique<T>(this));
+    }
+
     const std::vector<shEntity>& getEntities() const {
         return entities;
     }
-};
 
-class System {
-protected:
-    Manager* manager;
+    void update() {
+        for(auto& sys : systems) {
+            sys->update();
+        }
+    }
 
-public:
-    System(Manager* m): manager(m) {}
-
-    virtual void update() = 0;
-    virtual void draw() = 0;
-
-    virtual ~System() {}
+    void draw() {
+        for(auto& sys : systems) {
+            sys->draw();
+        }
+    }
 };
 
 #endif

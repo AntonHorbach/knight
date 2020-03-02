@@ -13,8 +13,7 @@ class AssetsManager;
 
 class Game {
     SDL_Window* window;
-    Manager entityManager;
-    std::vector<std::unique_ptr<System>> systems; 
+    Manager manager;
 
     bool running;
 
