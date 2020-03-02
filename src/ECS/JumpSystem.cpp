@@ -38,15 +38,12 @@ void JumpSystem::update() {
             if(jc.jumping && (jc.baseY - jc.height < tc.position.y)) {
                 tc.position.y -= tc.velocity.y;
             }
-            else if(jc.comingDown && tc.position.y < jc.baseY) {
+            else if(jc.comingDown) {
                 tc.position.y += tc.velocity.y;
             }
             else if(jc.jumping && (jc.baseY - jc.height == tc.position.y)) {
                 jc.jumping = false;
                 jc.comingDown = true;
-            }
-            else if(jc.comingDown && (jc.baseY == tc.position.y)) {
-                jc.comingDown = false;
             }
         }
     }

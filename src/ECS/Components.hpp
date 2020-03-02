@@ -33,4 +33,6 @@ struct JumperComponent: public Component {
     JumperComponent(float h);
 };
 
+struct ColliderComponent: public Component {};
+
 #endif

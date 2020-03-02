@@ -7,6 +7,7 @@ SDL_Event Game::event;
 AssetsManager Game::assetsManager;
 
 static shEntity player = {};
+static shEntity enemy = {};
 
 bool Game::init(const char* title, size_t width, size_t height,
                 bool fullscreen)
@@ -59,13 +60,20 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     player = entityManager.createEntity();
     player->addComponent<TransformComponent>(vec2f{300, 300}, vec2f{10, 10});
-    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 32, 32}, SDL_Rect{0, 0, 64, 64}, "knight");
+    player->addComponent<SpriteComponent>(SDL_Rect{13, 7, 19, 29}, SDL_Rect{0, 0, 38, 58}, "knight");
     player->addComponent<JumperComponent>(200.f);
     player->addComponent<KeybordInput>();
+    player->addComponent<ColliderComponent>();
+
+    enemy = entityManager.createEntity();
+    enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
+    enemy->addComponent<SpriteComponent>(SDL_Rect{13, 7, 19, 29}, SDL_Rect{0, 0, 38, 58}, "knight");
+    enemy->addComponent<ColliderComponent>();
 
     systems.push_back(std::unique_ptr<System>{new MovementSystem(&entityManager)});
-    systems.push_back(std::unique_ptr<System>{new DrawSystem(&entityManager)});
     systems.push_back(std::unique_ptr<System>(new JumpSystem(&entityManager)));
+    systems.push_back(std::unique_ptr<System>(new CollisionSystem(&entityManager)));
+    systems.push_back(std::unique_ptr<System>{new DrawSystem(&entityManager)});
 
     return true;
 }

@@ -25,4 +25,11 @@ public:
     void draw() override {}
 };
 
+class CollisionSystem: public System {
+public:
+    CollisionSystem(Manager* manager);
+    void update() override;
+    void draw() override {}
+};
+
 #endif
