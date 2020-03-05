@@ -7,7 +7,8 @@ set(CMAKE_CXX_COMPILER clang++)
 add_executable(knight src/main.cpp src/game.cpp src/AssetsManager.cpp
                 src/math/vec2.cpp src/ECS/MovementSystem.cpp
                 src/ECS/Components.cpp src/ECS/DrawSystem.cpp
-                src/ECS/JumpSystem.cpp src/ECS/CollisionSystem.cpp)
+                src/ECS/JumpSystem.cpp src/ECS/CollisionSystem.cpp
+                src/Events/EventBuffer.cpp)
 
 target_link_libraries(knight SDL2 SDL2_image)
 

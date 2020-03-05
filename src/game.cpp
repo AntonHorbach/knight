@@ -87,7 +87,7 @@ void Game::draw() {
 }
 
 void Game::handleEvents() {
-    SDL_PollEvent(&event);
+    eventBuffer.pollEvent(&event);
 
     switch(event.type) {
         case SDL_QUIT:
@@ -103,6 +103,7 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
+    eventBuffer.update();
     manager.update();
 }
 

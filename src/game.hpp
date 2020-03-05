@@ -8,12 +8,14 @@
 
 #include "ECS/Components.hpp"
 #include "ECS/Systems.hpp"
+#include "Events/EventBuffer.hpp"
 
 class AssetsManager;
 
 class Game {
     SDL_Window* window;
     Manager manager;
+    EventBuffer eventBuffer;
 
     bool running;
 
