@@ -16,12 +16,12 @@ void MovementSystem::update() {
             if(Game::event.type == SDL_KEYDOWN) {
                 switch(Game::event.key.keysym.sym) {
                 case SDLK_a:
-                    tc.position.x -= tc.velocity.x;
+                    tc.velocity.x = -tc.speed.x;
                     sc.current_animation = Animations::WALK;
                     sc.flip = SDL_FLIP_HORIZONTAL;
                     break;
                 case SDLK_d:
-                    tc.position.x += tc.velocity.x;
+                    tc.velocity.x = tc.speed.x;
                     sc.current_animation = Animations::WALK;
                     break;
                 default:
@@ -33,12 +33,15 @@ void MovementSystem::update() {
                 case SDLK_a:
                 case SDLK_d:
                     sc.src.x = 0;
+                    tc.velocity.x = 0;
                     sc.current_animation = Animations::NONE;
                     sc.flip = SDL_FLIP_NONE;
                 default:
                     break;
                 }
             }
+
+            tc.position.x += tc.velocity.x;
         }
     }
 }

@@ -2,8 +2,8 @@
 
 #include "../game.hpp"
 
-TransformComponent::TransformComponent(vec2f pos, vec2f v)
-    : position(pos), velocity(v)
+TransformComponent::TransformComponent(vec2f pos, vec2f s)
+    : position(pos), speed(s)
 {}
 
 SpriteComponent::SpriteComponent(SDL_Rect _src, SDL_Rect _dst,

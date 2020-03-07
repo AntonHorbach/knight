@@ -9,9 +9,10 @@
 
 struct TransformComponent: public Component {
     vec2f position;
-    vec2f velocity;
+    vec2f velocity = {0, 0};
+    vec2f speed;
 
-    TransformComponent(vec2f pos, vec2f v);
+    TransformComponent(vec2f pos, vec2f speed);
 };
 
 enum Animations {
@@ -35,8 +36,6 @@ struct KeybordInput: public Component {};
 struct JumperComponent: public Component {
     float height;
     float baseY;
-    bool jumping = false;
-    bool comingDown = false;
 
     JumperComponent(float h);
 };

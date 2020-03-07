@@ -59,7 +59,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
     player = manager.createEntity();
-    player->addComponent<TransformComponent>(vec2f{300, 500}, vec2f{20, 10});
+    player->addComponent<TransformComponent>(vec2f{300, 500}, vec2f{15, 10});
     player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight",
                                             true);
     player->addComponent<JumperComponent>(200.f);

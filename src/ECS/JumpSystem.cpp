@@ -16,16 +16,15 @@ void JumpSystem::update() {
             if(Game::event.type == SDL_KEYDOWN) {
                 switch(Game::event.key.keysym.sym) {
                 case SDLK_w: {
-                    if(!jc.jumping && !jc.comingDown) {
-                        jc.jumping = true;
+                    if(tc.velocity.y == 0.f) {
+                        tc.velocity.y = -tc.speed.y;
                         jc.baseY = tc.position.y;
                     }
                     break;
                 }
                 case SDLK_s: {
-                    if(jc.jumping) {
-                        jc.jumping = false;
-                        jc.comingDown = true;
+                    if(tc.velocity.y < 0.f) {
+                        tc.velocity.y = tc.speed.y;
                     }
 
                     break;
@@ -34,17 +33,12 @@ void JumpSystem::update() {
                     break;
                 }
             }
+            
+            if((tc.velocity.y < 0.f) && (jc.baseY - jc.height == tc.position.y)) {
+                tc.velocity.y = tc.speed.y;
+            }
 
-            if(jc.jumping && (jc.baseY - jc.height < tc.position.y)) {
-                tc.position.y -= tc.velocity.y;
-            }
-            else if(jc.comingDown) {
-                tc.position.y += tc.velocity.y;
-            }
-            else if(jc.jumping && (jc.baseY - jc.height == tc.position.y)) {
-                jc.jumping = false;
-                jc.comingDown = true;
-            }
+            tc.position.y += tc.velocity.y;
         }
     }
 }
