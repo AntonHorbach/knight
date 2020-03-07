@@ -59,16 +59,18 @@ bool Game::init(const char* title, size_t width, size_t height,
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
     player = manager.createEntity();
-    player->addComponent<TransformComponent>(vec2f{300, 400}, vec2f{10, 10});
-    player->addComponent<SpriteComponent>(SDL_Rect{13, 7, 19, 29}, SDL_Rect{0, 0, 38, 58}, "knight");
+    player->addComponent<TransformComponent>(vec2f{300, 500}, vec2f{20, 10});
+    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight",
+                                            true);
     player->addComponent<JumperComponent>(200.f);
     player->addComponent<KeybordInput>();
     player->addComponent<ColliderComponent>();
-
+/*
     enemy = manager.createEntity();
     enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
-    enemy->addComponent<SpriteComponent>(SDL_Rect{13, 7, 19, 29}, SDL_Rect{0, 0, 38, 58}, "knight");
-    enemy->addComponent<ColliderComponent>();
+    enemy->addComponent<SpriteComponent>(SDL_Rect{13, 7, 19, 29}, SDL_Rect{0, 0, 38, 58}, "knight",
+                                            true);
+    enemy->addComponent<ColliderComponent>();*/
 
     manager.addSystem<MovementSystem>();
     manager.addSystem<JumpSystem>();

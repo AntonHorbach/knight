@@ -22,9 +22,9 @@ public:
     bool loadTexture(const std::string& path, const std::string& key);
     sharedTexture getTexture(const std::string& key);
     void drawTexture(const std::string& key, SDL_Rect srcrect,
-                        SDL_Rect dstrect);
+                        SDL_Rect dstrect, SDL_RendererFlip flip);
     void drawTexture(const sharedTexture& texture, SDL_Rect srcrect,
-                        SDL_Rect dstrect);
+                        SDL_Rect dstrect, SDL_RendererFlip flip);
 };
 
 #endif

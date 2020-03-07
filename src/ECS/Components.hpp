@@ -14,12 +14,20 @@ struct TransformComponent: public Component {
     TransformComponent(vec2f pos, vec2f v);
 };
 
+enum Animations {
+    NONE, WALK
+};
+
 struct SpriteComponent: public Component {
     SDL_Rect src;
     SDL_Rect dst;
     std::string texture_id;
+    Animations current_animation;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    bool animation;
 
-    SpriteComponent(SDL_Rect _src, SDL_Rect _dst, const std::string& text_id);
+    SpriteComponent(SDL_Rect _src, SDL_Rect _dst,
+                    const std::string& text_id, bool animation = false);
 };
 
 struct KeybordInput: public Component {};

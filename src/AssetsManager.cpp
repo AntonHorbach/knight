@@ -37,10 +37,12 @@ sharedTexture AssetsManager::getTexture(const std::string& key) {
 
 void AssetsManager::drawTexture(const sharedTexture& texture,
                                 SDL_Rect srcrect,
-                                SDL_Rect dstrect)
+                                SDL_Rect dstrect,
+                                SDL_RendererFlip flip)
 {
     if(texture.get() != nullptr) {
-        SDL_RenderCopy(Game::renderer, texture.get(), &srcrect, &dstrect);
+        SDL_RenderCopyEx(Game::renderer, texture.get(), &srcrect, &dstrect,
+                        NULL, nullptr, flip);
     }
     else {
         std::cout << "Texture is not loaded" << std::endl;
@@ -48,7 +50,7 @@ void AssetsManager::drawTexture(const sharedTexture& texture,
 }
 
 void AssetsManager::drawTexture(const std::string& key, SDL_Rect srcrect,
-                        SDL_Rect dstrect)
+                        SDL_Rect dstrect, SDL_RendererFlip flip)
 {
-    drawTexture(textures[key], srcrect, dstrect);
+    drawTexture(textures[key], srcrect, dstrect, flip);
 }

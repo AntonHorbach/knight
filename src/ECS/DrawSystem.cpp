@@ -12,9 +12,17 @@ void DrawSystem::update() {
         {
             SpriteComponent& sc = entity->getComponent<SpriteComponent>();
             TransformComponent& tc = entity->getComponent<TransformComponent>();
-
+            
             sc.dst.x = tc.position.x;
             sc.dst.y = tc.position.y;
+
+            if(sc.animation) {
+                sc.src.y = sc.current_animation * sc.src.h;
+
+                if(sc.current_animation != Animations::NONE) {
+                    sc.src.x = (sc.src.x + sc.src.w) % (sc.src.w * 5);
+                }
+            }
         }
     }
 }
@@ -24,8 +32,8 @@ void DrawSystem::draw() {
         if(entity->hasComponent<SpriteComponent>())
         {
             SpriteComponent& sc = entity->getComponent<SpriteComponent>();
-            
-            Game::assetsManager.drawTexture(sc.texture_id, sc.src, sc.dst);
+
+            Game::assetsManager.drawTexture(sc.texture_id, sc.src, sc.dst, sc.flip);
         }
     }
 }
