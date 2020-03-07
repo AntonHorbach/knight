@@ -40,6 +40,10 @@ struct JumperComponent: public Component {
     JumperComponent(float h);
 };
 
-struct ColliderComponent: public Component {};
+struct ColliderComponent: public Component {
+    SDL_Rect dst;
+
+    ColliderComponent(SDL_Rect dst);
+};
 
 #endif

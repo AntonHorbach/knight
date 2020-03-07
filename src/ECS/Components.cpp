@@ -14,3 +14,6 @@ SpriteComponent::SpriteComponent(SDL_Rect _src, SDL_Rect _dst,
 
 JumperComponent::JumperComponent(float h): height(h)
 {}
+
+ColliderComponent::ColliderComponent(SDL_Rect d): dst(d)
+{}
