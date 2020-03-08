@@ -68,8 +68,7 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     enemy = manager.createEntity();
     enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
-    enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight",
-                                            true);
+    enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight");
     enemy->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
 
     manager.addSystem<MovementSystem>();
@@ -89,18 +88,18 @@ void Game::draw() {
 }
 
 void Game::handleEvents() {
-    eventBuffer.pollEvent(&event);
-
-    switch(event.type) {
-        case SDL_QUIT:
-            running = false;
-            break;
-        case SDL_KEYDOWN:
-            if(SDLK_ESCAPE == event.key.keysym.sym)
+    if(eventBuffer.pollEvent(&event)) {
+        switch(event.type) {
+            case SDL_QUIT:
                 running = false;
-            break;
-        default:
-            break;
+                break;
+            case SDL_KEYDOWN:
+                if(SDLK_ESCAPE == event.key.keysym.sym)
+                    running = false;
+                break;
+            default:
+                break;
+        }
     }
 }
 

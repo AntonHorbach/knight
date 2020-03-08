@@ -10,6 +10,8 @@ bool EventBuffer::pollEvent(SDL_Event* event) {
     if(!events.empty()) {
         *event = events.front();
         events.pop_front();
+
+        return true;
     }
 
     return false;

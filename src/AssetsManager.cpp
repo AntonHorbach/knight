@@ -42,10 +42,10 @@ void AssetsManager::drawTexture(const sharedTexture& texture,
 {
     if(texture.get() != nullptr) {
         SDL_RenderCopyEx(Game::renderer, texture.get(), &srcrect, &dstrect,
-                        NULL, nullptr, flip);
+                        0.0, nullptr, flip);
     }
     else {
-        std::cout << "Texture is not loaded" << std::endl;
+        SDL_Log("Can't draw texture: not loaded");
     }
 }
 
