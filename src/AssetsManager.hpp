@@ -11,9 +11,16 @@
 
 #include "game.hpp"
 
-using sharedTexture = std::shared_ptr<SDL_Texture>;
+struct Texture {
+    SDL_Texture* texture;
+    int w;
+    int h;
+};
 
-sharedTexture makeSharedTexture(SDL_Texture* texture);
+using sharedTexture = std::shared_ptr<Texture>;
+
+void destroyTexture(Texture* texture);
+sharedTexture makeSharedTexture(Texture* texture);
 
 class AssetsManager {
     std::map<std::string, sharedTexture> textures;

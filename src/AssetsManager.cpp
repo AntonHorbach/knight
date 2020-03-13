@@ -1,7 +1,12 @@
 #include "AssetsManager.hpp"
 
-sharedTexture makeSharedTexture(SDL_Texture* texture) {
-    return {texture, SDL_DestroyTexture};
+void destroyTexture(Texture* texture) {
+    SDL_DestroyTexture(texture->texture);
+    delete texture;
+}
+
+sharedTexture makeSharedTexture(Texture* texture) {
+    return {texture, destroyTexture};
 }
 
 bool AssetsManager::loadTexture(const std::string& path,
@@ -15,8 +20,11 @@ bool AssetsManager::loadTexture(const std::string& path,
         res = false;
     }
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::renderer,
-                                                        surface);
+    Texture* texture = new Texture {
+        SDL_CreateTextureFromSurface(Game::renderer, surface),
+        surface->w, surface->h
+    };
+    
     if(res && !texture) {
         SDL_Log("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
         res = false;
@@ -41,7 +49,8 @@ void AssetsManager::drawTexture(const sharedTexture& texture,
                                 SDL_RendererFlip flip)
 {
     if(texture.get() != nullptr) {
-        SDL_RenderCopyEx(Game::renderer, texture.get(), &srcrect, &dstrect,
+        SDL_RenderCopyEx(Game::renderer, texture.get()->texture,
+                        &srcrect, &dstrect,
                         0.0, nullptr, flip);
     }
     else {
@@ -52,5 +61,11 @@ void AssetsManager::drawTexture(const sharedTexture& texture,
 void AssetsManager::drawTexture(const std::string& key, SDL_Rect srcrect,
                         SDL_Rect dstrect, SDL_RendererFlip flip)
 {
-    drawTexture(textures[key], srcrect, dstrect, flip);
+    sharedTexture texture = nullptr;
+
+    if(textures.find(key) != textures.end()) {
+        texture = textures[key];
+    }
+
+    drawTexture(std::move(texture), srcrect, dstrect, flip);
 }
