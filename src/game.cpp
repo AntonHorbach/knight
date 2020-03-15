@@ -6,9 +6,6 @@ SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 AssetsManager Game::assetsManager;
 
-static shEntity player = {};
-static shEntity enemy = {};
-
 bool Game::init(const char* title, size_t width, size_t height,
                 bool fullscreen)
 {
@@ -58,7 +55,7 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     assetsManager.loadTexture("./assets/knight_anims.png", "knight");
 
-    player = manager.createEntity();
+    auto player = manager.createEntity();
     player->addComponent<TransformComponent>(vec2f{300, 300}, vec2f{10, 10});
     player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 37}, SDL_Rect{0, 0, 96, 74}, "knight",
                                             "idle");
@@ -67,12 +64,12 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
 
     player->getComponent<SpriteComponent>().animations.insert({
-        {"idle", {0, 4, 100}},
+        {"idle", {0, 4, 150}},
         {"walk", {1, 6, 100}},
         {"jump", {2, 8, 50}}
     });
 
-    enemy = manager.createEntity();
+    auto enemy = manager.createEntity();
     enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
     enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight");
     enemy->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});

@@ -17,6 +17,11 @@ void DrawSystem::update() {
             sc.dst.y = tc.position.y;
 
             if(sc.animation) {
+                if(sc.animations.find(sc.current_animation) == sc.animations.end()) {
+                    sc.current_animation = "idle";
+                    sc.src.x = 0;
+                }
+
                 Animation* anim = &sc.animations[sc.current_animation];
                 
                 sc.src.y = anim->ind * sc.src.h;
