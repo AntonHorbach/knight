@@ -12,6 +12,7 @@ void JumpSystem::update() {
         {
             TransformComponent& tc = entity->getComponent<TransformComponent>();
             JumperComponent& jc = entity->getComponent<JumperComponent>();
+            SpriteComponent& sc = entity->getComponent<SpriteComponent>();
 
             if(Game::event.type == SDL_KEYDOWN) {
                 switch(Game::event.key.keysym.sym) {
@@ -19,6 +20,7 @@ void JumpSystem::update() {
                     if(tc.velocity.y == 0.f) {
                         tc.velocity.y = -tc.speed.y;
                         jc.baseY = tc.position.y;
+                        sc.current_animation = "jump";
                     }
                     break;
                 }

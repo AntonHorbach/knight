@@ -17,11 +17,12 @@ void DrawSystem::update() {
             sc.dst.y = tc.position.y;
 
             if(sc.animation) {
-                sc.src.y = sc.current_animation * sc.src.h;
-
-                if(sc.current_animation != Animations::NONE) {
-                    sc.src.x = (sc.src.x + sc.src.w) % (sc.src.w * 5);
-                }
+                Animation* anim = &sc.animations[sc.current_animation];
+                
+                sc.src.y = anim->ind * sc.src.h;
+                sc.src.x = sc.src.w * static_cast<int>(
+                        (SDL_GetTicks() / anim->speed) % anim->frames
+                );
             }
         }
     }

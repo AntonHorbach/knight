@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 
+#include <map>
+
 #include "ECS.hpp"
 #include "../math/vec2.hpp"
 #include "../AssetsManager.hpp"
@@ -15,20 +17,24 @@ struct TransformComponent: public Component {
     TransformComponent(vec2f pos, vec2f speed);
 };
 
-enum Animations {
-    NONE, WALK
+struct Animation {
+    size_t ind;
+    size_t frames;
+    size_t speed;
 };
 
 struct SpriteComponent: public Component {
     SDL_Rect src;
     SDL_Rect dst;
     std::string texture_id;
-    Animations current_animation;
+    std::string current_animation;
+    std::map<std::string, Animation> animations;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     bool animation;
 
-    SpriteComponent(SDL_Rect _src, SDL_Rect _dst,
-                    const std::string& text_id, bool animation = false);
+    SpriteComponent(SDL_Rect src, SDL_Rect dst, const std::string& text_id);
+    SpriteComponent(SDL_Rect src, SDL_Rect dst, const std::string& text_id,
+                    const std::string& base_anim);
 };
 
 struct KeybordInput: public Component {};

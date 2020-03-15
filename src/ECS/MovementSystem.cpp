@@ -17,12 +17,11 @@ void MovementSystem::update() {
                 switch(Game::event.key.keysym.sym) {
                 case SDLK_a:
                     tc.velocity.x = -tc.speed.x;
-                    sc.current_animation = Animations::WALK;
                     sc.flip = SDL_FLIP_HORIZONTAL;
                     break;
                 case SDLK_d:
                     tc.velocity.x = tc.speed.x;
-                    sc.current_animation = Animations::WALK;
+                    sc.flip = SDL_FLIP_NONE;
                     break;
                 default:
                     break;
@@ -34,14 +33,19 @@ void MovementSystem::update() {
                 case SDLK_d:
                     sc.src.x = 0;
                     tc.velocity.x = 0;
-                    sc.current_animation = Animations::NONE;
-                    sc.flip = SDL_FLIP_NONE;
                 default:
                     break;
                 }
             }
 
             tc.position.x += tc.velocity.x;
+
+            if(tc.velocity.x != 0.f && sc.current_animation == "idle") {
+                sc.current_animation = "walk";
+            }
+            else if(tc.velocity.x == 0.f && sc.current_animation == "walk") {
+                sc.current_animation = "idle";
+            }
         }
     }
 }

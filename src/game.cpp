@@ -60,11 +60,17 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     player = manager.createEntity();
     player->addComponent<TransformComponent>(vec2f{300, 300}, vec2f{10, 10});
-    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight",
-                                            true);
+    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 37}, SDL_Rect{0, 0, 96, 74}, "knight",
+                                            "idle");
     player->addComponent<JumperComponent>(200.f);
     player->addComponent<KeybordInput>();
     player->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
+
+    player->getComponent<SpriteComponent>().animations.insert({
+        {"idle", {0, 4, 100}},
+        {"walk", {1, 6, 100}},
+        {"jump", {2, 8, 50}}
+    });
 
     enemy = manager.createEntity();
     enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
