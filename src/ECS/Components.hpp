@@ -21,6 +21,9 @@ struct Animation {
     size_t ind;
     size_t frames;
     size_t speed;
+    bool cyclic = true;
+    bool played = false;
+    size_t beginTime = 0;
 };
 
 struct SpriteComponent: public Component {

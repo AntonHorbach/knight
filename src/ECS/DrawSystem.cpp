@@ -17,17 +17,30 @@ void DrawSystem::update() {
             sc.dst.y = tc.position.y;
 
             if(sc.animation) {
-                if(sc.animations.find(sc.current_animation) == sc.animations.end()) {
+                if(sc.animations.find(sc.current_animation) == sc.animations.end())
+                {
                     sc.current_animation = "idle";
                     sc.src.x = 0;
                 }
 
                 Animation* anim = &sc.animations[sc.current_animation];
+
+                if(!anim->cyclic && anim->played) {
+                    anim->played = false;
+                    sc.current_animation = "idle";
+                    anim = &sc.animations[sc.current_animation];
+                    sc.src.x = 0;
+                }
                 
                 sc.src.y = anim->ind * sc.src.h;
                 sc.src.x = sc.src.w * static_cast<int>(
-                        (SDL_GetTicks() / anim->speed) % anim->frames
+                        (((SDL_GetTicks() - anim->beginTime) / anim->speed) % anim->frames)
                 );
+
+                if(!anim->cyclic && sc.src.x == sc.src.w * (anim->frames - 1))
+                {
+                    anim->played = true;
+                }
             }
         }
     }
