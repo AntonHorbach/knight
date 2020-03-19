@@ -36,8 +36,6 @@ void CollisionSystem::update() {
                 }
                 else {
                     tcI.velocity.y = 0.f;
-                    scI.src.x = 0;
-                    scI.current_animation = &scI.animations["idle"];
                 }
             }
         }
