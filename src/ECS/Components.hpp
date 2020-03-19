@@ -30,14 +30,13 @@ struct SpriteComponent: public Component {
     SDL_Rect src;
     SDL_Rect dst;
     std::string texture_id;
-    std::string current_animation;
+    Animation* current_animation = nullptr;
     std::map<std::string, Animation> animations;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     bool animation;
 
-    SpriteComponent(SDL_Rect src, SDL_Rect dst, const std::string& text_id);
     SpriteComponent(SDL_Rect src, SDL_Rect dst, const std::string& text_id,
-                    const std::string& base_anim);
+                    bool animation = false);
 };
 
 struct KeybordInput: public Component {};

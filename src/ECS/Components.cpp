@@ -7,16 +7,8 @@ TransformComponent::TransformComponent(vec2f pos, vec2f s)
 {}
 
 SpriteComponent::SpriteComponent(SDL_Rect _src, SDL_Rect _dst,
-                                const std::string& text_id)
-    : src(_src), dst(_dst), texture_id(text_id), animation(false),
-    current_animation("none")
-{}
-
-SpriteComponent::SpriteComponent(SDL_Rect _src, SDL_Rect _dst,
-                    const std::string& text_id,
-                    const std::string& base_anim)
-    : src(_src), dst(_dst), texture_id(text_id), animation(true),
-    current_animation(base_anim)
+                    const std::string& text_id, bool anim)
+    : src(_src), dst(_dst), texture_id(text_id), animation(anim)
 {}
 
 JumperComponent::JumperComponent(float h): height(h)

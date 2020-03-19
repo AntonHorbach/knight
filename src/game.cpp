@@ -53,12 +53,13 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     running = true;
 
-    assetsManager.loadTexture("./assets/knight_anims.png", "knight");
+    assetsManager.loadTexture("./assets/knight_anims.png", "knight");    
+
 
     auto player = manager.createEntity();
     player->addComponent<TransformComponent>(vec2f{300, 300}, vec2f{10, 10});
-    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 37}, SDL_Rect{0, 0, 96, 74}, "knight",
-                                            "idle");
+    player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 37}, SDL_Rect{0, 0, 100, 74}, "knight",
+                                            true);
     player->addComponent<JumperComponent>(200.f);
     player->addComponent<KeybordInput>();
     player->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
@@ -66,17 +67,27 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->getComponent<SpriteComponent>().animations.insert({
         {"idle", {0, 4, 150}},
         {"walk", {1, 6, 100}},
-        {"jump", {2, 8, 50}}
+        {"jump", {2, 8, 30}},
+        {"attack", {6, 8, 100, false}}
     });
 
+
     auto enemy = manager.createEntity();
-    enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
-    enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 48, 39}, SDL_Rect{0, 0, 96, 78}, "knight");
+    enemy->addComponent<TransformComponent>(vec2f{400, 400}, vec2f{10, 10});
+    enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 39}, SDL_Rect{0, 0, 100, 78}, "knight",
+                                            true);
     enemy->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
 
+    enemy->getComponent<SpriteComponent>().animations.insert(
+        {"idle", {0, 4, 150}}
+    );
+
+
+    manager.addSystem<KeybordSystem>();
     manager.addSystem<MovementSystem>();
     manager.addSystem<JumpSystem>();
     manager.addSystem<CollisionSystem>();
+    manager.addSystem<AnimationSystem>();
     manager.addSystem<DrawSystem>();
 
     return true;

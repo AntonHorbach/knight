@@ -32,4 +32,18 @@ public:
     void draw() override {}
 };
 
+class KeybordSystem: public System {
+public:
+    KeybordSystem(Manager* manager);
+    void update() override;
+    void draw() override {};
+};
+
+class AnimationSystem: public System {
+public:
+    AnimationSystem(Manager* manager);
+    void update() override;
+    void draw() override {}
+};
+
 #endif
