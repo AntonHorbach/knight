@@ -46,4 +46,18 @@ public:
     void draw() override {}
 };
 
+class HealthSystem: public System {
+public:
+    HealthSystem(Manager* manager);
+    void update() override;
+    void draw() override;
+};
+/*
+class AttackSystem: public System {
+public:
+    AttackSystem(Manager* manager);
+    void update() override;
+    void draw() override {}
+};*/
+
 #endif

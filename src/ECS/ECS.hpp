@@ -113,6 +113,10 @@ public:
         return entities;
     }
 
+    std::vector<shEntity>& getEntities() {
+        return entities;
+    }
+
     void update() {
         for(auto& sys : systems) {
             sys->update();

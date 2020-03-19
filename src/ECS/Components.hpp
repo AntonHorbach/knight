@@ -54,4 +54,13 @@ struct ColliderComponent: public Component {
     ColliderComponent(SDL_Rect dst);
 };
 
+struct HealthComponent: public Component {
+    float max_health = 100.f;
+    float regen = 0.1f;
+    float health = max_health;
+
+    HealthComponent();
+    HealthComponent(float health, float regen);
+};
+
 #endif

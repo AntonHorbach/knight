@@ -63,13 +63,15 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->addComponent<JumperComponent>(200.f);
     player->addComponent<KeybordInput>();
     player->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
+    player->addComponent<HealthComponent>();
 
     player->getComponent<SpriteComponent>().animations.insert({
         {"idle", {0, 4, 150}},
         {"walk", {1, 6, 100}},
         {"jump", {2, 8, 30}},
-        {"attack", {6, 8, 100, false}}
+        {"double_attack", {6, 8, 100, false}}
     });
+    player->getComponent<HealthComponent>().health = 50.f;
 
 
     auto enemy = manager.createEntity();
@@ -77,6 +79,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 39}, SDL_Rect{0, 0, 100, 78}, "knight",
                                             true);
     enemy->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
+    enemy->addComponent<HealthComponent>();
 
     enemy->getComponent<SpriteComponent>().animations.insert(
         {"idle", {0, 4, 150}}
@@ -88,6 +91,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     manager.addSystem<JumpSystem>();
     manager.addSystem<CollisionSystem>();
     manager.addSystem<AnimationSystem>();
+    manager.addSystem<HealthSystem>();
     manager.addSystem<DrawSystem>();
 
     return true;

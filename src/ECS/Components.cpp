@@ -16,3 +16,10 @@ JumperComponent::JumperComponent(float h): height(h)
 
 ColliderComponent::ColliderComponent(SDL_Rect d): dst(d)
 {}
+
+HealthComponent::HealthComponent()
+{}
+
+HealthComponent::HealthComponent(float h, float r)
+    : max_health(h), regen(r)
+{}
