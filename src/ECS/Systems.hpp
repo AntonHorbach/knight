@@ -52,12 +52,12 @@ public:
     void update() override;
     void draw() override;
 };
-/*
+
 class AttackSystem: public System {
 public:
     AttackSystem(Manager* manager);
     void update() override;
     void draw() override {}
-};*/
+};
 
 #endif

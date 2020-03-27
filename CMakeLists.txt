@@ -9,7 +9,8 @@ add_executable(knight src/main.cpp src/game.cpp src/AssetsManager.cpp
                 src/ECS/Components.cpp src/ECS/DrawSystem.cpp
                 src/ECS/JumpSystem.cpp src/ECS/CollisionSystem.cpp
                 src/Events/EventBuffer.cpp src/ECS/KeybordSystem.cpp
-                src/ECS/AnimationSystem.cpp src/ECS/HealthSystem.cpp)
+                src/ECS/AnimationSystem.cpp src/ECS/HealthSystem.cpp
+                src/ECS/AttackSystem.cpp)
 
 target_link_libraries(knight SDL2 SDL2_image)
 

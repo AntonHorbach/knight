@@ -9,6 +9,7 @@ void KeybordSystem::update() {
             auto& tc = entity->getComponent<TransformComponent>();
             auto& jc = entity->getComponent<JumperComponent>();
             auto& sc = entity->getComponent<SpriteComponent>();
+            auto& ac = entity->getComponent<AttackComponent>();
 
             if(Game::event.type == SDL_KEYDOWN) {
                 switch(Game::event.key.keysym.sym) {
@@ -32,6 +33,12 @@ void KeybordSystem::update() {
                     if(tc.velocity.y < 0.f) {
                         tc.velocity.y = tc.speed.y;
                     }
+                } break;
+
+                
+                case SDLK_f: {
+                    ac.attacking = true;
+                    ac.current_attack = &ac.attacks["double_attack"];
                 } break;
 
                 default:

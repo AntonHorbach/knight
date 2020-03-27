@@ -63,4 +63,17 @@ struct HealthComponent: public Component {
     HealthComponent(float health, float regen);
 };
 
+struct Attack {
+    std::string name;
+    float dmg;
+    float speed;
+    size_t times;
+};
+
+struct AttackComponent: public Component {
+    std::map<std::string, Attack> attacks;
+    Attack* current_attack = nullptr;
+    bool attacking = false;
+};
+
 #endif

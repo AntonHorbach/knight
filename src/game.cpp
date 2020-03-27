@@ -64,6 +64,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->addComponent<KeybordInput>();
     player->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
     player->addComponent<HealthComponent>();
+    player->addComponent<AttackComponent>();
 
     player->getComponent<SpriteComponent>().animations.insert({
         {"idle", {0, 4, 150}},
@@ -71,11 +72,14 @@ bool Game::init(const char* title, size_t width, size_t height,
         {"jump", {2, 8, 30}},
         {"double_attack", {6, 8, 100, false}}
     });
-    player->getComponent<HealthComponent>().health = 50.f;
+
+    player->getComponent<AttackComponent>().attacks.insert({
+        {"double_attack", {"double_attack", 20.f, 0.01f, 2}}
+    });
 
 
     auto enemy = manager.createEntity();
-    enemy->addComponent<TransformComponent>(vec2f{400, 400}, vec2f{10, 10});
+    enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
     enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 39}, SDL_Rect{0, 0, 100, 78}, "knight",
                                             true);
     enemy->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
@@ -89,6 +93,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     manager.addSystem<KeybordSystem>();
     manager.addSystem<MovementSystem>();
     manager.addSystem<JumpSystem>();
+    manager.addSystem<AttackSystem>();
     manager.addSystem<CollisionSystem>();
     manager.addSystem<AnimationSystem>();
     manager.addSystem<HealthSystem>();

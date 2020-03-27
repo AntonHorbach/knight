@@ -11,6 +11,7 @@ void AnimationSystem::update() {
             if(sc.animation) {
                 auto& tc = entity->getComponent<TransformComponent>();
                 auto& jc = entity->getComponent<JumperComponent>();
+                auto* ac = &entity->getComponent<AttackComponent>();
                 
                 if(sc.current_animation == nullptr)
                 {
@@ -30,6 +31,12 @@ void AnimationSystem::update() {
                 else if (tc.velocity.y != 0.f) {
                     if(sc.current_animation != &sc.animations["jump"]) {
                         sc.current_animation = &sc.animations["jump"];
+                        sc.current_animation->beginTime = SDL_GetTicks();
+                    }
+                }
+                else if(ac && ac->attacking) {
+                    if(sc.current_animation != &sc.animations[ac->current_attack->name]) {
+                        sc.current_animation = &sc.animations[ac->current_attack->name];
                         sc.current_animation->beginTime = SDL_GetTicks();
                     }
                 }
@@ -60,6 +67,11 @@ void AnimationSystem::update() {
                 if(sc.src.x == (sc.src.w * (anim->frames - 1)))
                 {
                     anim->played = true;
+                    sc.current_animation->beginTime = 0;
+
+                    if(ac) {
+                        ac->attacking = false;
+                    }
                 }
             }
         }
