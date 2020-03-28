@@ -77,6 +77,7 @@ struct Attack {
     AnimationInd animation;
     float dmg;
     float speed;
+    float radius;
     size_t times;
 };
 

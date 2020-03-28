@@ -23,22 +23,27 @@ void AttackSystem::update() {
         auto& ccA = attacker->getComponent<ColliderComponent>();
         auto& tcA = attacker->getComponent<TransformComponent>();
         auto& ac = attacker->getComponent<AttackComponent>();
+        auto cur_atk = ac.current_attack;
         
         for(auto& victim : victims) {
             if(attacker != victim) {
                 auto& ccV = victim->getComponent<ColliderComponent>();
                 auto& tcV = victim->getComponent<TransformComponent>();
+                float direction = ccA.dst.w + cur_atk->radius;
 
-                if((tcA.position.x + ccA.dst.x + ccA.dst.w + 15 >= tcV.position.x + ccV.dst.x)
+                if(attacker->getComponent<SpriteComponent>().flip == SDL_FLIP_HORIZONTAL) {
+                    direction = -cur_atk->radius;
+                }
+
+                if((tcA.position.x + ccA.dst.x + direction >= tcV.position.x + ccV.dst.x)
                     &&
-                    (tcA.position.x + ccA.dst.x + ccA.dst.w + 15 <= tcV.position.x + ccV.dst.x + ccV.dst.w)
+                    (tcA.position.x + ccA.dst.x + direction <= tcV.position.x + ccV.dst.x + ccV.dst.w)
                     &&
-                    (tcA.position.y + ccA.dst.y + (ccA.dst.w / 2)) >= (tcV.position.y + ccV.dst.y)
+                    (tcA.position.y + ccA.dst.y + (ccA.dst.w / 2) + cur_atk->radius) >= (tcV.position.y + ccV.dst.y)
                     &&
-                    (tcA.position.y + ccA.dst.y + (ccA.dst.w / 2)) <= (tcV.position.y + ccV.dst.y + ccV.dst.h))
+                    (tcA.position.y + ccA.dst.y + (ccA.dst.w / 2) - cur_atk->radius) <= (tcV.position.y + ccV.dst.y + ccV.dst.h))
                 {
                     auto& hc = victim->getComponent<HealthComponent>();
-                    auto& sc = attacker->getComponent<SpriteComponent>();
 
                     hc.health -= ac.current_attack->dmg;
                 }

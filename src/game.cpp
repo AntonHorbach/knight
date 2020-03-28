@@ -57,7 +57,7 @@ bool Game::init(const char* title, size_t width, size_t height,
 
 
     auto player = manager.createEntity();
-    player->addComponent<TransformComponent>(vec2f{300, 300}, vec2f{10, 10});
+    player->addComponent<TransformComponent>(vec2f{500, 300}, vec2f{10, 10});
     player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 37}, SDL_Rect{0, 0, 100, 74}, "knight",
                                             true);
     player->addComponent<JumperComponent>(200.f);
@@ -74,7 +74,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     });
 
     player->getComponent<AttackComponent>().attacks.insert({
-        {AttackType::DOUBLE_ATTACK, {AttackType::DOUBLE_ATTACK, AnimationInd::DOUBLE_ATTACK, 20.f, 0.01f, 2}}
+        {AttackType::DOUBLE_ATTACK, {AttackType::DOUBLE_ATTACK, AnimationInd::DOUBLE_ATTACK, 2.5f, 0.01f, 23.f, 2}}
     });
 
 
