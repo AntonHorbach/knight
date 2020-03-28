@@ -67,14 +67,14 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->addComponent<AttackComponent>();
 
     player->getComponent<SpriteComponent>().animations.insert({
-        {"idle", {0, 4, 150}},
-        {"walk", {1, 6, 100}},
-        {"jump", {2, 8, 30}},
-        {"double_attack", {6, 8, 100, false}}
+        {AnimationInd::IDLE, {AnimationInd::IDLE, 0, 4, 150}},
+        {AnimationInd::WALK, {AnimationInd::WALK, 1, 6, 100}},
+        {AnimationInd::JUMP, {AnimationInd::JUMP, 2, 8, 30}},
+        {AnimationInd::DOUBLE_ATTACK, {AnimationInd::DOUBLE_ATTACK, 6, 8, 100, false}}
     });
 
     player->getComponent<AttackComponent>().attacks.insert({
-        {"double_attack", {"double_attack", 20.f, 0.01f, 2}}
+        {AttackType::DOUBLE_ATTACK, {AttackType::DOUBLE_ATTACK, AnimationInd::DOUBLE_ATTACK, 20.f, 0.01f, 2}}
     });
 
 
@@ -86,7 +86,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     enemy->addComponent<HealthComponent>();
 
     enemy->getComponent<SpriteComponent>().animations.insert(
-        {"idle", {0, 4, 150}}
+        {AnimationInd::IDLE, {AnimationInd::IDLE, 0, 4, 150}}
     );
 
 

@@ -17,7 +17,12 @@ struct TransformComponent: public Component {
     TransformComponent(vec2f pos, vec2f speed);
 };
 
+enum class AnimationInd: size_t {
+    IDLE = 0, WALK, JUMP, DOUBLE_ATTACK
+};
+
 struct Animation {
+    AnimationInd animationName;
     size_t ind;
     size_t frames;
     size_t speed;
@@ -31,7 +36,7 @@ struct SpriteComponent: public Component {
     SDL_Rect dst;
     std::string texture_id;
     Animation* current_animation = nullptr;
-    std::map<std::string, Animation> animations;
+    std::map<AnimationInd, Animation> animations;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     bool animation;
 
@@ -63,15 +68,20 @@ struct HealthComponent: public Component {
     HealthComponent(float health, float regen);
 };
 
+enum class AttackType {
+    DOUBLE_ATTACK
+};
+
 struct Attack {
-    std::string name;
+    AttackType type;
+    AnimationInd animation;
     float dmg;
     float speed;
     size_t times;
 };
 
 struct AttackComponent: public Component {
-    std::map<std::string, Attack> attacks;
+    std::map<AttackType, Attack> attacks;
     Attack* current_attack = nullptr;
     bool attacking = false;
 };

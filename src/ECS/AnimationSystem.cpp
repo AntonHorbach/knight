@@ -15,33 +15,33 @@ void AnimationSystem::update() {
                 
                 if(sc.current_animation == nullptr)
                 {
-                    sc.current_animation = &sc.animations["idle"];
+                    sc.current_animation = &sc.animations[AnimationInd::IDLE];
                     sc.current_animation->beginTime = SDL_GetTicks();
                     sc.src.x = 0;
                 }
 
                 if(tc.velocity.x != 0.f) {
                     if(tc.velocity.y == 0.f
-                        && sc.current_animation != &sc.animations["walk"])
+                        && sc.current_animation != &sc.animations[AnimationInd::WALK])
                     {
-                        sc.current_animation = &sc.animations["walk"];
+                        sc.current_animation = &sc.animations[AnimationInd::WALK];
                         sc.current_animation->beginTime = SDL_GetTicks();
                     }
                 }
                 else if (tc.velocity.y != 0.f) {
-                    if(sc.current_animation != &sc.animations["jump"]) {
-                        sc.current_animation = &sc.animations["jump"];
+                    if(sc.current_animation != &sc.animations[AnimationInd::JUMP]) {
+                        sc.current_animation = &sc.animations[AnimationInd::JUMP];
                         sc.current_animation->beginTime = SDL_GetTicks();
                     }
                 }
                 else if(ac && ac->attacking) {
-                    if(sc.current_animation != &sc.animations[ac->current_attack->name]) {
-                        sc.current_animation = &sc.animations[ac->current_attack->name];
+                    if(sc.current_animation != &sc.animations[ac->current_attack->animation]) {
+                        sc.current_animation = &sc.animations[ac->current_attack->animation];
                         sc.current_animation->beginTime = SDL_GetTicks();
                     }
                 }
-                else if(sc.current_animation != &sc.animations["idle"]) {
-                    sc.current_animation = &sc.animations["idle"];
+                else if(sc.current_animation != &sc.animations[AnimationInd::IDLE]) {
+                    sc.current_animation = &sc.animations[AnimationInd::IDLE];
                     sc.current_animation->beginTime = SDL_GetTicks();
                 }
 
@@ -53,7 +53,7 @@ void AnimationSystem::update() {
                 }
                 else if(!anim->cyclic && anim->played) {
                     anim->played = false;
-                    sc.current_animation = &sc.animations["idle"];
+                    sc.current_animation = &sc.animations[AnimationInd::IDLE];
                     anim = sc.current_animation;
                     anim->beginTime = SDL_GetTicks();
                     sc.src.x = 0;

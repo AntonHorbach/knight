@@ -38,7 +38,7 @@ void KeybordSystem::update() {
                 
                 case SDLK_f: {
                     ac.attacking = true;
-                    ac.current_attack = &ac.attacks["double_attack"];
+                    ac.current_attack = &ac.attacks[AttackType::DOUBLE_ATTACK];
                 } break;
 
                 default:
