@@ -2,13 +2,14 @@
 #define GAME_HPP
 
 #include <iostream>
+#include <memory>
 
 #include <SDL2/SDL.h>
-#include <memory>
 
 #include "ECS/Components.hpp"
 #include "ECS/Systems.hpp"
 #include "Events/EventBuffer.hpp"
+#include "math/matrix.hpp"
 
 class AssetsManager;
 
