@@ -7,6 +7,34 @@
 
 template <typename T>
 class Matrix {
+    class Row {
+        friend class Matrix;
+
+        Matrix* mParent;
+        size_t mRowInd;
+
+        Row(Matrix* parent, size_t rowInd)
+            : mParent(parent), mRowInd(rowInd)
+        {}
+
+    public:
+        constexpr T& operator[](size_t col) {
+            if(col >= mParent->mColumns) {
+                throw std::out_of_range("out of columns range");
+            }
+
+            return mParent->mData[mRowInd * mParent->mColumns + col];
+        }
+
+        constexpr const T& operator[](size_t col) const {
+            if(col >= mParent->mColumns) {
+                throw std::out_of_range("out of columns range");
+            }
+
+            return mParent->mData[mRowInd * mParent->mColumns + col];
+        }
+    };
+
 public:
     Matrix() {}
 
@@ -74,6 +102,14 @@ public:
         mColumns = columns;
 
         initialize(value);
+    }
+
+    constexpr Row operator[](size_t row) {
+        if(row >= mRows) {
+            throw std::out_of_range("out of rows range");
+        }
+
+        return Row(this, row);
     }
 
     ~Matrix() {
