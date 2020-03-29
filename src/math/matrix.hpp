@@ -45,10 +45,8 @@ public:
         std::cout << "Matrix copy operator\n";
         resize(oth.mRows, oth.mColumns);
 
-        for(size_t i = 0; i < mRows; ++i) {
-            for(size_t j = 0; j < mColumns; ++j) {
-                mData[i][j] = oth.mData[i][j];
-            }
+        for(size_t i = 0; i < mRows * mColumns; ++i) {
+            mData[i] = oth.mData[i];
         }
 
         return *this;
@@ -60,11 +58,9 @@ public:
 
         for(size_t i = 0; i < mRows; ++i) {
             for(size_t j = 0; j < mColumns; ++j) {
-                std::cout << mData[i][j] << ' ';
+                std::cout << mData[i * mColumns + j] << ' ';
             }
             std::cout << '\n';
-
-            delete[] mData[i];
         }
         std::cout << '\n';
 
@@ -86,19 +82,16 @@ public:
 
 private:
     void initialize(const T& value) {
-        mData = new T*[mRows];
-        for(size_t i = 0; i < mRows; ++i) {
-            mData[i] = new T[mColumns];
+        mData = new T[mRows * mColumns];
 
-            for(size_t j = 0; j < mColumns; ++j) {
-                mData[i][j] = value;
-            }
+        for(size_t i = 0; i < mRows * mColumns; ++i) {
+            mData[i] = value;
         }
     }
 
     size_t mRows = 0;
     size_t mColumns = 0;
-    T** mData = nullptr;
+    T* mData = nullptr;
 };
 
 #endif //KNIGHT_MATRIX_HPP
