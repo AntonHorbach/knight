@@ -147,19 +147,22 @@ public:
         return *this;
     }
 
-    friend Matrix operator+(Matrix<T> left, const Matrix<T>& right) {
-        std::cout << "Plus\n";
-        return left += right;
+    friend Matrix operator+(const Matrix<T>& left, const Matrix<T>& right) {
+        auto res = left;
+        res += right;
+        return res;
     }
 
-    friend Matrix operator-(Matrix<T> left, const Matrix<T>& right) {
-        std::cout << "Minus\n";
-        return left -= right;
+    friend Matrix operator-(const Matrix<T>& left, const Matrix<T>& right) {
+        auto res = left;
+        res -= right;
+        return res;
     }
 
-    friend Matrix operator*(Matrix<T> left, const Matrix<T>& right) {
-        std::cout << "Mult\n";
-        return left *= right;
+    friend Matrix operator*(const Matrix<T>& left, const Matrix<T>& right) {
+        auto res = left;
+        res *= right;
+        return res;
     }
 
     friend std::ostream& operator<<(std::ostream& stream, const Matrix<T>& mat) {
