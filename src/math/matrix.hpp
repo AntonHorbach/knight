@@ -49,7 +49,7 @@ public:
 
     Matrix(Matrix<T>&& oth) {
         std::cout << "Matrix move constructor\n";
-        *this = oth;
+        *this = std::move(oth);
     }
 
     Matrix(size_t rows, size_t columns, const T& value = T())
@@ -85,6 +85,7 @@ public:
     }
 
     void free() {
+        mColumns = mRows = 0;
         delete[] mData;
     }
 
