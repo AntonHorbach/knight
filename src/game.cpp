@@ -100,22 +100,14 @@ bool Game::init(const char* title, size_t width, size_t height,
     manager.addSystem<DrawSystem>();
 
 
-    Matrix<int> mat(4, 4, 10);
+    Matrix<int> mat(5, 4, 10);
+    Matrix<int> mat2(4, 7, 2);
 
-    mat[0][0] = 3;
-    std::cout << mat[3][3] << '\n';
+    auto mat3 = mat + mat;
+    auto mat4 = mat3 - mat;
+    auto mat5 = mat * mat2;
 
-    try {
-        mat[120][2] = 4;
-    } catch(const std::out_of_range& ex) {
-        std::cout << ex.what() << '\n';
-    }
-
-    try {
-        mat[2][120] = 431;
-    } catch (const std::out_of_range& ex) {
-        std::cout << ex.what() << '\n';
-    }
+    std::cout << mat3 << '\n' << mat4 << '\n' << mat5 << '\n';
 
     return true;
 }

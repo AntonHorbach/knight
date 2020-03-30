@@ -17,6 +17,10 @@ class Matrix {
             : mParent(parent), mRowInd(rowInd)
         {}
 
+        Row(const Matrix* parent, size_t rowInd)
+                : mParent(const_cast<Matrix*>(parent)), mRowInd(rowInd)
+        {}
+
     public:
         constexpr T& operator[](size_t col) {
             if(col >= mParent->mColumns) {
@@ -81,17 +85,6 @@ public:
     }
 
     void free() {
-        std::cout << "Matrix free:\n";
-        std::cout << mRows << ' ' << mColumns << '\n';
-
-        for(size_t i = 0; i < mRows; ++i) {
-            for(size_t j = 0; j < mColumns; ++j) {
-                std::cout << mData[i * mColumns + j] << ' ';
-            }
-            std::cout << '\n';
-        }
-        std::cout << '\n';
-
         delete[] mData;
     }
 
@@ -110,6 +103,74 @@ public:
         }
 
         return Row(this, row);
+    }
+
+    constexpr Row operator[](size_t row) const {
+        if(row >= mRows) {
+            throw std::out_of_range("out of rows range");
+        }
+
+        return Row(this, row);
+    }
+
+    Matrix& operator+=(const Matrix<T>& oth) {
+        for(size_t i = 0; i < std::min(mRows * mColumns, oth.mRows * oth.mColumns); ++i) {
+            mData[i] += oth.mData[i];
+        }
+
+        return *this;
+    }
+
+    Matrix& operator-=(const Matrix<T>& oth) {
+        for(size_t i = 0; i < std::min(mRows * mColumns, oth.mRows * oth.mColumns); ++i) {
+            mData[i] -= oth.mData[i];
+        }
+
+        return *this;
+    }
+
+    Matrix& operator*=(const Matrix<T>& oth) {
+        if (mColumns == oth.mRows) {
+            Matrix res(mRows, oth.mColumns);
+
+            for(size_t i = 0; i < mRows; ++i) {
+                for(size_t j = 0; j < oth.mColumns; ++j) {
+                    for (size_t k = 0; k < mColumns; ++k) {
+                        res[i][j] += (*this)[i][k] * oth[k][j];
+                    }
+                }
+            }
+
+            *this = res;
+        }
+
+        return *this;
+    }
+
+    friend Matrix operator+(Matrix<T> left, const Matrix<T>& right) {
+        std::cout << "Plus\n";
+        return left += right;
+    }
+
+    friend Matrix operator-(Matrix<T> left, const Matrix<T>& right) {
+        std::cout << "Minus\n";
+        return left -= right;
+    }
+
+    friend Matrix operator*(Matrix<T> left, const Matrix<T>& right) {
+        std::cout << "Mult\n";
+        return left *= right;
+    }
+
+    friend std::ostream& operator<<(std::ostream& stream, const Matrix<T>& mat) {
+        for(size_t i = 0; i < mat.mRows; ++i) {
+            for(size_t j = 0; j < mat.mColumns; ++j) {
+                stream << mat.mData[i * mat.mColumns + j] << ' ';
+            }
+            stream << '\n';
+        }
+
+        return stream;
     }
 
     ~Matrix() {
