@@ -203,6 +203,13 @@ public:
         return res;
     }
 
+    template <typename NumType>
+    friend Matrix operator*(const Matrix<T>& mat, NumType num) {
+        auto res = mat;
+        res *= num;
+        return res;
+    }
+
     friend std::ostream& operator<<(std::ostream& stream, const Matrix<T>& mat) {
         for(size_t i = 0; i < mat.mRows; ++i) {
             for(size_t j = 0; j < mat.mColumns; ++j) {
