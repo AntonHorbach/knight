@@ -103,11 +103,9 @@ bool Game::init(const char* title, size_t width, size_t height,
     Matrix<int> mat(5, 4, 10);
     Matrix<int> mat2(4, 7, 2);
 
-    auto mat3 = mat + mat;
-    auto mat4 = mat3 - mat;
-    auto mat5 = mat * mat2;
+    auto mat3 = mat2.transpose();
 
-    std::cout << mat3 << '\n' << mat4 << '\n' << mat5 << '\n';
+    std::cout << mat3 << '\n';
 
     return true;
 }

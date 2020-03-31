@@ -5,6 +5,8 @@
 #ifndef KNIGHT_MATRIX_HPP
 #define KNIGHT_MATRIX_HPP
 
+#include <iostream>
+
 template <typename T>
 class Matrix {
     class Row {
@@ -43,12 +45,10 @@ public:
     Matrix() {}
 
     Matrix(const Matrix<T>& oth) {
-        std::cout << "Matrix copy constructor\n";
         *this = oth;
     }
 
     Matrix(Matrix<T>&& oth) {
-        std::cout << "Matrix move constructor\n";
         *this = std::move(oth);
     }
 
@@ -59,7 +59,6 @@ public:
     }
 
     Matrix<T>& operator=(Matrix<T>&& oth) {
-        std::cout << "Matrix move operator\n";
         free();
 
         mRows = oth.mRows;
@@ -74,7 +73,6 @@ public:
     }
 
     Matrix<T>& operator=(const Matrix<T>& oth) {
-        std::cout << "Matrix copy operator\n";
         resize(oth.mRows, oth.mColumns);
 
         for(size_t i = 0; i < mRows * mColumns; ++i) {
@@ -96,6 +94,36 @@ public:
         mColumns = columns;
 
         initialize(value);
+    }
+
+    Matrix transpose() const {
+        Matrix<T> res(mColumns, mRows);
+
+        for(size_t i = 0; i < mRows; ++i) {
+            for(size_t j = 0; j < mColumns; ++j) {
+                res.mData[j * res.mColumns + i] = mData[i * mColumns + j];
+            }
+        }
+
+        return res;
+    }
+
+    bool isZero() const {
+        for(size_t i = 0; i < mRows * mColumns; ++i) {
+            if(mData[i] != T()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    constexpr size_t getRows() const noexcept {
+        return mRows;
+    }
+
+    constexpr size_t getColumns() const noexcept {
+        return mColumns;
     }
 
     constexpr Row operator[](size_t row) {
@@ -143,6 +171,15 @@ public:
             }
 
             *this = res;
+        }
+
+        return *this;
+    }
+
+    template <typename NumType>
+    Matrix& operator*=(NumType num) {
+        for(size_t i = 0 ; i < mRows * mColumns; ++i) {
+            mData[i] *= num;
         }
 
         return *this;
