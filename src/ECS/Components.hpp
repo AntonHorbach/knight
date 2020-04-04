@@ -24,6 +24,7 @@ struct Animation {
     AnimationInd animationName;
     size_t ind;
     size_t frames;
+    size_t offset;
     size_t speed;
     bool cyclic = true;
     bool played = false;
