@@ -21,14 +21,17 @@ enum class AnimationInd: size_t {
 };
 
 struct Animation {
-    AnimationInd animationName;
-    size_t ind;
-    size_t frames;
-    size_t offset;
-    size_t speed;
+    AnimationInd animationName = AnimationInd::IDLE;
+    size_t ind = 0;
+    size_t frames = 4;
+    size_t offset = 0;
+    size_t speed = 100;
     bool cyclic = true;
     bool played = false;
     size_t beginTime = 0;
+
+    Animation() = default;
+    Animation(Animation&&) = default;
 };
 
 void insert(std::map<AnimationInd, Animation>&, Animation);
@@ -82,6 +85,9 @@ struct Attack {
     float speed;
     float radius;
     size_t times;
+
+    Attack() = default;
+    Attack(Attack&&) = default;
 };
 
 void insert(std::map<AttackType, Attack>&, Attack);

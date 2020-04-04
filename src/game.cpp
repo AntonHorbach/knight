@@ -72,14 +72,9 @@ bool Game::init(const char* title, size_t width, size_t height,
 
     auto enemy = manager.createEntity();
     enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
-    enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 39}, SDL_Rect{0, 0, 100, 78}, "knight",
-                                            true);
+    enemy->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 39}, SDL_Rect{0, 0, 100, 78}, "knight");
     enemy->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
     enemy->addComponent<HealthComponent>();
-
-    enemy->getComponent<SpriteComponent>().animations.insert(
-        {AnimationInd::IDLE, {AnimationInd::IDLE, 0, 4, 0, 150}}
-    );
 
     if(!loadStructFromFile<Animation>(
             player->getComponent<SpriteComponent>().animations,
@@ -176,7 +171,7 @@ bool loadStructFromFile(Collection& col, const std::string& fileName) {
         return false;
     }
 
-    Struct obj;
+    Struct obj{};
     while(!file.eof()) {
         if(!(file >> obj)) {
             return false;

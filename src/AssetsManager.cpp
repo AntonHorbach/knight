@@ -64,5 +64,5 @@ void AssetsManager::drawTexture(const std::string& key, SDL_Rect srcrect,
         texture = textures[key];
     }
 
-    drawTexture(std::move(texture), srcrect, dstrect, flip);
+    drawTexture(texture, srcrect, dstrect, flip);
 }
