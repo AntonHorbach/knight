@@ -20,7 +20,7 @@ bool EventBuffer::pollEvent(SDL_Event* event) {
 void EventBuffer::update() {
     if(events.empty()) return;
 
-    SDL_Event last_event = events.back();
+    const SDL_Event& last_event = events.back();
 
     auto compare ([&last_event](SDL_Event& event) -> bool
     {
