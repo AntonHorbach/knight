@@ -24,12 +24,8 @@ void EventBuffer::update() {
 
     auto compare ([&last_event](SDL_Event& event) -> bool
     {
-        if(event.type == SDL_KEYDOWN
-            && event.key.keysym.sym == last_event.key.keysym.sym)
-        {
-            return true;
-        }
-        else return false;
+        return event.type == SDL_KEYDOWN
+               && event.key.keysym.sym == last_event.key.keysym.sym;
     });
 
     if(last_event.type == SDL_KEYUP) {    

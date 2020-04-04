@@ -7,7 +7,6 @@
 
 #include "ECS.hpp"
 #include "../math/vec2.hpp"
-#include "../AssetsManager.hpp"
 
 struct TransformComponent: public Component {
     vec2f position;
@@ -40,23 +39,23 @@ struct SpriteComponent: public Component {
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     bool animation;
 
-    SpriteComponent(SDL_Rect src, SDL_Rect dst, const std::string& text_id,
+    SpriteComponent(SDL_Rect src, SDL_Rect dst, std::string text_id,
                     bool animation = false);
 };
 
-struct KeybordInput: public Component {};
+struct KeyboardInput: public Component {};
 
 struct JumperComponent: public Component {
     float height;
     float baseY;
 
-    JumperComponent(float h);
+    explicit JumperComponent(float h);
 };
 
 struct ColliderComponent: public Component {
     SDL_Rect dst;
 
-    ColliderComponent(SDL_Rect dst);
+    explicit ColliderComponent(SDL_Rect dst);
 };
 
 struct HealthComponent: public Component {
@@ -64,7 +63,7 @@ struct HealthComponent: public Component {
     float regen = 0.1f;
     float health = max_health;
 
-    HealthComponent();
+    HealthComponent() = default;
     HealthComponent(float health, float regen);
 };
 

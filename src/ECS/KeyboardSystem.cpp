@@ -1,11 +1,13 @@
 #include "Systems.hpp"
 
-KeybordSystem::KeybordSystem(Manager* m): System(m)
+#include "../game.hpp"
+
+KeyboardSystem::KeyboardSystem(Manager* m): System(m)
 {}
 
-void KeybordSystem::update() {
+void KeyboardSystem::update() {
     for(auto& entity : manager->getEntities()) {
-        if(entity->hasComponent<KeybordInput>()) {
+        if(entity->hasComponent<KeyboardInput>()) {
             auto& tc = entity->getComponent<TransformComponent>();
             auto& jc = entity->getComponent<JumperComponent>();
             auto& sc = entity->getComponent<SpriteComponent>();

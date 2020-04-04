@@ -4,7 +4,6 @@
 #include <vector>
 #include <iostream>
 #include <memory>
-#include <string>
 #include <array>
 #include <bitset>
 
@@ -13,7 +12,7 @@ inline size_t getComponentTypeID() noexcept {
     return typeID++;
 }
 
-template <typename T>
+template <typename T> [[nodiscard]]
 inline size_t getComponentID() noexcept {
     static size_t componentID = getComponentTypeID();
     return componentID;
@@ -26,11 +25,11 @@ constexpr size_t MAX_COMPONENTS = 24;
 
 class Entity {
     Manager* m_manager;
-    std::array<std::shared_ptr<Component>, MAX_COMPONENTS> components;
+    std::array<std::unique_ptr<Component>, MAX_COMPONENTS> components;
     std::bitset<MAX_COMPONENTS> componentsState;
 
 public:
-    Entity(Manager* manager): m_manager(manager) {}
+    explicit Entity(Manager* manager): m_manager(manager) {}
 
     template <typename T, typename... Args>
     bool addComponent(Args&&... args) {
@@ -40,7 +39,7 @@ public:
             return false;
         }
 
-        components[componentID] = std::shared_ptr<Component>
+        components[componentID] = std::unique_ptr<Component>
                                     {new T(std::forward<Args>(args)...)};
         componentsState[componentID] = true;
 
@@ -78,12 +77,12 @@ protected:
     Manager* manager;
 
 public:
-    System(Manager* m): manager(m) {}
+    explicit System(Manager* m): manager(m) {}
 
     virtual void update() = 0;
     virtual void draw() = 0;
 
-    virtual ~System() {}
+    virtual ~System() = default;
 };
 
 using shEntity = std::shared_ptr<Entity>;
@@ -109,10 +108,12 @@ public:
         systems.push_back(std::make_unique<T>(this));
     }
 
+    [[nodiscard]]
     const std::vector<shEntity>& getEntities() const {
         return entities;
     }
 
+    [[nodiscard]]
     std::vector<shEntity>& getEntities() {
         return entities;
     }

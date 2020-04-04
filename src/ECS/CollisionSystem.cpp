@@ -14,14 +14,14 @@ void CollisionSystem::update() {
     }
 
     for(size_t i = 0; i < colliderEntities.size(); ++i) {
-        TransformComponent& tcI = colliderEntities[i]->getComponent<TransformComponent>();
-        SpriteComponent& scI = colliderEntities[i]->getComponent<SpriteComponent>();
-        ColliderComponent& ccI = colliderEntities[i]->getComponent<ColliderComponent>();
+        auto& tcI = colliderEntities[i]->getComponent<TransformComponent>();
+        auto& scI = colliderEntities[i]->getComponent<SpriteComponent>();
+        auto& ccI = colliderEntities[i]->getComponent<ColliderComponent>();
 
         for(size_t j = i + 1; j < colliderEntities.size(); ++j) {
-            TransformComponent& tcJ = colliderEntities[j]->getComponent<TransformComponent>();
-            SpriteComponent& scJ = colliderEntities[j]->getComponent<SpriteComponent>();
-            ColliderComponent& ccJ = colliderEntities[j]->getComponent<ColliderComponent>();
+            auto& tcJ = colliderEntities[j]->getComponent<TransformComponent>();
+            auto& scJ = colliderEntities[j]->getComponent<SpriteComponent>();
+            auto& ccJ = colliderEntities[j]->getComponent<ColliderComponent>();
 
             if(tcI.position.x + ccI.dst.x + ccI.dst.w >= tcJ.position.x + ccJ.dst.x
                 && tcJ.position.x + ccJ.dst.x + ccJ.dst.w >= tcI.position.x + ccI.dst.x

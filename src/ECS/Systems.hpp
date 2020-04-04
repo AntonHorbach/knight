@@ -6,56 +6,56 @@
 
 class MovementSystem: public System {
 public:
-    MovementSystem(Manager* manager);
+    explicit MovementSystem(Manager* manager);
     void update() override;
     void draw() override {}
 };
 
 class DrawSystem: public System {
 public:
-    DrawSystem(Manager* manager);
+    explicit DrawSystem(Manager* manager);
     void update() override;
     void draw() override;
 };
 
 class JumpSystem: public System {
 public:
-    JumpSystem(Manager* manager);
+    explicit JumpSystem(Manager* manager);
     void update() override;
     void draw() override {}
 };
 
 class CollisionSystem: public System {
 public:
-    CollisionSystem(Manager* manager);
+    explicit CollisionSystem(Manager* manager);
     void update() override;
     void draw() override {}
 };
 
-class KeybordSystem: public System {
+class KeyboardSystem: public System {
 public:
-    KeybordSystem(Manager* manager);
+    explicit KeyboardSystem(Manager* manager);
     void update() override;
     void draw() override {};
 };
 
 class AnimationSystem: public System {
 public:
-    AnimationSystem(Manager* manager);
+    explicit AnimationSystem(Manager* manager);
     void update() override;
     void draw() override {}
 };
 
 class HealthSystem: public System {
 public:
-    HealthSystem(Manager* manager);
+    explicit HealthSystem(Manager* manager);
     void update() override;
     void draw() override;
 };
 
 class AttackSystem: public System {
 public:
-    AttackSystem(Manager* manager);
+    explicit AttackSystem(Manager* manager);
     void update() override;
     void draw() override {}
 };

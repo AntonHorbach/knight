@@ -61,7 +61,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->addComponent<SpriteComponent>(SDL_Rect{0, 0, 50, 37}, SDL_Rect{0, 0, 100, 74}, "knight",
                                             true);
     player->addComponent<JumperComponent>(200.f);
-    player->addComponent<KeybordInput>();
+    player->addComponent<KeyboardInput>();
     player->addComponent<ColliderComponent>(SDL_Rect{28, 14, 36, 58});
     player->addComponent<HealthComponent>();
     player->addComponent<AttackComponent>();
@@ -90,7 +90,7 @@ bool Game::init(const char* title, size_t width, size_t height,
     );
 
 
-    manager.addSystem<KeybordSystem>();
+    manager.addSystem<KeyboardSystem>();
     manager.addSystem<MovementSystem>();
     manager.addSystem<JumpSystem>();
     manager.addSystem<AttackSystem>();
@@ -98,14 +98,6 @@ bool Game::init(const char* title, size_t width, size_t height,
     manager.addSystem<AnimationSystem>();
     manager.addSystem<HealthSystem>();
     manager.addSystem<DrawSystem>();
-
-
-    Matrix<int> mat(5, 4, 10);
-    Matrix<int> mat2(4, 7, 2);
-
-    auto mat3 = mat2.transpose();
-
-    std::cout << mat3 << '\n';
 
     return true;
 }
@@ -140,8 +132,8 @@ void Game::update() {
 }
 
 int Game::exec() {
-    const size_t fps = 30;
-    const size_t frame_delay = 1000 / fps;
+    const Uint32 fps = 30;
+    const Uint32 frame_delay = 1000 / fps;
 
     while(running) {
         Uint32 frame_start = SDL_GetTicks();
@@ -150,7 +142,7 @@ int Game::exec() {
         handleEvents();
         update();
 
-        int frame_time = SDL_GetTicks() - frame_start;
+        Uint32 frame_time = SDL_GetTicks() - frame_start;
 
         if(frame_delay > frame_time) {
             SDL_Delay(frame_delay - frame_time);

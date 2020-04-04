@@ -20,10 +20,7 @@ bool AssetsManager::loadTexture(const std::string& path,
         res = false;
     }
 
-    Texture* texture = new Texture {
-        SDL_CreateTextureFromSurface(Game::renderer, surface),
-        surface->w, surface->h
-    };
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::renderer, surface);
     
     if(res && !texture) {
         SDL_Log("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
@@ -31,7 +28,7 @@ bool AssetsManager::loadTexture(const std::string& path,
     }
 
     if(res) {
-        textures.insert({key, makeSharedTexture(texture)});
+        textures.insert({key, makeSharedTexture(new Texture{texture, surface->w, surface->h})});
     }
 
     SDL_FreeSurface(surface);

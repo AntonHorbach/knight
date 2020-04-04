@@ -1,5 +1,7 @@
 #include "Systems.hpp"
 
+#include "../game.hpp"
+
 HealthSystem::HealthSystem(Manager* m): System(m)
 {}
 
