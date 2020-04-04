@@ -2,6 +2,9 @@
 
 #include "AssetsManager.hpp"
 
+template <typename Struct, typename Collection>
+bool loadStructFromFile(Collection&, const std::string&);
+
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 AssetsManager Game::assetsManager;
@@ -66,17 +69,6 @@ bool Game::init(const char* title, size_t width, size_t height,
     player->addComponent<HealthComponent>();
     player->addComponent<AttackComponent>();
 
-    player->getComponent<SpriteComponent>().animations.insert({
-        {AnimationInd::IDLE, {AnimationInd::IDLE, 0, 4, 0, 150}},
-        {AnimationInd::WALK, {AnimationInd::WALK, 1, 6, 0, 100}},
-        {AnimationInd::JUMP, {AnimationInd::JUMP, 2, 8, 0, 30}},
-        {AnimationInd::DOUBLE_ATTACK, {AnimationInd::DOUBLE_ATTACK, 6, 8, 0, 100, false}}
-    });
-
-    player->getComponent<AttackComponent>().attacks.insert({
-        {AttackType::DOUBLE_ATTACK, {AttackType::DOUBLE_ATTACK, AnimationInd::DOUBLE_ATTACK, 2.5f, 0.01f, 23.f, 2}}
-    });
-
 
     auto enemy = manager.createEntity();
     enemy->addComponent<TransformComponent>(vec2f{400, 300}, vec2f{10, 10});
@@ -88,6 +80,24 @@ bool Game::init(const char* title, size_t width, size_t height,
     enemy->getComponent<SpriteComponent>().animations.insert(
         {AnimationInd::IDLE, {AnimationInd::IDLE, 0, 4, 0, 150}}
     );
+
+    if(!loadStructFromFile<Animation>(
+            player->getComponent<SpriteComponent>().animations,
+            "./assets/playerAnimations.anms"
+        ))
+    {
+        SDL_Log("Failed to load animations");
+        return false;
+    }
+
+    if(!loadStructFromFile<Attack>(
+            player->getComponent<AttackComponent>().attacks,
+            "./assets/playerAttacks.atcks"
+    ))
+    {
+        SDL_Log("Failed to load attacks");
+        return false;
+    }
 
 
     manager.addSystem<KeyboardSystem>();
@@ -156,4 +166,24 @@ Game::~Game() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+template <typename Struct, typename Collection>
+bool loadStructFromFile(Collection& col, const std::string& fileName) {
+    std::ifstream file(fileName);
+
+    if(!file) {
+        return false;
+    }
+
+    Struct obj;
+    while(!file.eof()) {
+        if(!(file >> obj)) {
+            return false;
+        }
+
+        insert(col, std::move(obj));
+    }
+
+    return true;
 }

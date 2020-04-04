@@ -31,6 +31,9 @@ struct Animation {
     size_t beginTime = 0;
 };
 
+void insert(std::map<AnimationInd, Animation>&, Animation);
+std::istream& operator>>(std::istream&, Animation&);
+
 struct SpriteComponent: public Component {
     SDL_Rect src;
     SDL_Rect dst;
@@ -80,6 +83,9 @@ struct Attack {
     float radius;
     size_t times;
 };
+
+void insert(std::map<AttackType, Attack>&, Attack);
+std::istream& operator>>(std::istream&, Attack&);
 
 struct AttackComponent: public Component {
     std::map<AttackType, Attack> attacks;
